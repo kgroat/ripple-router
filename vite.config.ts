@@ -1,15 +1,15 @@
 import { defineConfig } from 'vite';
 import { ripple } from 'vite-plugin-ripple';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [ripple() as any],
 	build: {
 		target: 'esnext',
-		minify: false,
+		minify: mode === 'production',
 
 		lib: {
 			entry: 'src/index.ts',
-			formats: ['es'],
+			formats: ['es' as const],
 			fileName: 'index',
 		},
 		rollupOptions: {
@@ -19,4 +19,4 @@ export default defineConfig({
 			],
 		},
 	},
-});
+}));

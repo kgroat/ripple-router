@@ -12,16 +12,16 @@
   },
   "scripts": {
     "build": "pnpm build:vite && pnpm build:tsc",
-    "build:vite": "vite build",
+    "build:vite": "vite build --mode=\"${MODE:-development}\"",
     "build:tsc": "tsc",
-    "prepack": "pnpm build"
+    "prepack": "MODE=production pnpm build"
   },
   "keywords": [
     "ripple",
     "router"
   ],
   "author": "kgroat",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "packageManager": "pnpm@10.14.0",
   "devDependencies": {
     "prettier": "^3.6.2",
