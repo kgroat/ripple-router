@@ -2,7 +2,7 @@
 
 import { type Component } from 'ripple';
 
-import { getPath, useGoTo } from './context';
+import { getRoute } from './context';
 import { type RouterProps, type Routes } from './routing';
 
 import { Link as OrigLink } from './link.ripple';
@@ -17,6 +17,5 @@ export const Link = OrigLink as Component<JSX.IntrinsicElements['a']>;
 export {
 	type RouterProps,
 	type Routes,
-	getPath,
-	useGoTo,
+	getRoute,
 };

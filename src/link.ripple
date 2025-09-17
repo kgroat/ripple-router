@@ -1,8 +1,8 @@
-import { useGoTo } from './context'
+import { getRoute } from './context'
 
 export component Link (props: JSX.IntrinsicElements['a']) {
-  const $goTo = useGoTo();
-  function handleClick (ev: MouseEvent) {
+  const { $goTo } = getRoute();
+  const $handleClick = (ev: MouseEvent) => {
     if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) {
       return;
     }
@@ -12,5 +12,5 @@ export component Link (props: JSX.IntrinsicElements['a']) {
     props.onClick?.(event);
   }
 
-  <a {...props} onClick={handleClick}><props.$children /></a>
+  <a {...props} onClick={$handleClick}><props.$children /></a>
 }

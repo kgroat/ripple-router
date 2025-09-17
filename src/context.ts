@@ -1,13 +1,12 @@
 import { createContext } from "ripple";
 
-export const PathContext = createContext([window.location.pathname, (_: string) => {}]);
+export const RouteContext = createContext({
+  $path: window.location.pathname,
+  $goTo: (_: string) => {},
+});
 
-export function getPath () {
-  return PathContext.get()[0];
-}
-
-export function useGoTo () {
-  return PathContext.get()[1]
+export function getRoute () {
+  return RouteContext.get();
 }
 
 // function joinPaths (oldPath: string, newPath: string) {

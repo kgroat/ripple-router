@@ -1,6 +1,6 @@
-import { type Component, effect } from 'ripple'
+import { type Component, effect, untrack } from 'ripple'
 import { RouterMap } from './routing'
-import { PathContext } from './context'
+import { RouteContext } from './context'
 
 export component Router (props: {
   $routes: {
@@ -11,33 +11,36 @@ export component Router (props: {
   }
   $404: Component;
 }) {
-  const $pathContext = [window.location.pathname, setPath];
-  PathContext.set($pathContext);
-
   const $compiledRoutes = RouterMap.from(props.$routes);
-  let $match = $compiledRoutes.getMatch($pathContext[0]);
-  let $oldMatch = $match;
+  let $match = untrack(() => $compiledRoutes).getMatch(window.location.pathname);
 
-  function setPath (path: string) {
+  const $setPath = (path: string) => {
+    const currentMatch = $match;
     window.history.pushState({}, '', path);
-    $pathContext = [window.location.pathname, setPath];
-    $match = $compiledRoutes.getMatch($pathContext[0]);
-    $oldMatch = null
+    $routeDetails.$path = window.location.pathname;
+    $match = $compiledRoutes.getMatch($routeDetails.$path);
+    if ($match?.$component !== currentMatch?.$component) {
+      $renderHack = !$renderHack;
+    }
   }
 
-  effect(() => {
-    $match;
-    $oldMatch = null;
-    PathContext.set($pathContext);
-  });
+  let $renderHack = false;
 
-  if ($match && $oldMatch !== $match) {
+  const $routeDetails = {
+    $path: window.location.pathname,
+    $params: $match?.$params ?? {},
+    $goTo: $setPath,
+  };
+
+  RouteContext.set($routeDetails);
+
+  if ($match && $renderHack) {
     const FoundComponent = $match.$component;
     <FoundComponent $params={$match.$params} />
   } else if ($match) {
     const FoundComponent = $match.$component;
     <FoundComponent $params={$match.$params} />
   } else {
-    <props.$404 $route={$pathContext[0]} />
+    <props.$404 $route={$routeDetails.$path} />
   }
 }
