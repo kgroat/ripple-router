@@ -1,0 +1,8 @@
+import { Link } from '@kgroat/ripple-router';
+
+export component Home () {
+	<h1>{'Home'}</h1>
+	<p><Link class='link' href='/foo/bar/'>{'Go to Foo'}</Link></p>
+	<p><Link class='link' href='/inline'>{'Go to Inline'}</Link></p>
+	<p><Link class='link' href='/doesnt-exist'>{'Whoops!'}</Link></p>
+}

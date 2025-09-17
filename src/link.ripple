@@ -1,0 +1,16 @@
+import { useGoTo } from './context'
+
+export component Link (props: JSX.IntrinsicElements['a']) {
+  const $goTo = useGoTo();
+  function handleClick (ev: MouseEvent) {
+    if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) {
+      return;
+    }
+  
+    event.preventDefault();
+    $goTo(props.href);
+    props.onClick?.(event);
+  }
+
+  <a {...props} onClick={handleClick}><props.$children /></a>
+}

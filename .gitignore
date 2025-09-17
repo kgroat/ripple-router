@@ -1,0 +1,15 @@
+# pnpm
+node_modules
+
+# vite
+dist
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

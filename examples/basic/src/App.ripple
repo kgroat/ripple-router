@@ -1,0 +1,34 @@
+import { Link, Router } from '@kgroat/ripple-router';
+import { Home } from './Home.ripple';
+import { Foo } from './Foo.ripple';
+component Inline () {
+  <h1>{'Inline'}</h1>
+	<p><Link class='link' href='/'>{'Go Home'}</Link></p>
+	<p><Link class='link' href='/foo/bar/'>{'Go to Foo'}</Link></p>
+}
+
+component NotFound (props: { $route: string }) {
+  <h1>{'Not Found'}</h1>
+  <p>{'The route '}<code>{props.$route}</code>{' does not exist'}</p>
+	<p><Link class='link' href='/'>{'Go Home'}</Link></p>
+	<p><Link class='link' href='/foo/bar/'>{'Go to Foo'}</Link></p>
+	<p><Link class='link' href='/inline'>{'Go to Inline'}</Link></p>
+}
+
+export component App() {
+  <Router
+    $routes={{
+      '/': {
+        component: Home,
+      },
+      '/foo/:$foo/*$rest': {
+        component: Foo,
+        allowExtra: true,
+      },
+      '/inline': {
+        component: Inline,
+      }
+    }}
+    $404={NotFound}
+  />
+}

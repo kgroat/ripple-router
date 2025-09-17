@@ -1,0 +1,43 @@
+import { type Component, effect } from 'ripple'
+import { RouterMap } from './routing'
+import { PathContext } from './context'
+
+export component Router (props: {
+  $routes: {
+    [routeStr: `/${string}`]: {
+      component: Component;
+      exact?: boolean;
+    }
+  }
+  $404: Component;
+}) {
+  const $pathContext = [window.location.pathname, setPath];
+  PathContext.set($pathContext);
+
+  const $compiledRoutes = RouterMap.from(props.$routes);
+  let $match = $compiledRoutes.getMatch($pathContext[0]);
+  let $oldMatch = $match;
+
+  function setPath (path: string) {
+    window.history.pushState({}, '', path);
+    $pathContext = [window.location.pathname, setPath];
+    $match = $compiledRoutes.getMatch($pathContext[0]);
+    $oldMatch = null
+  }
+
+  effect(() => {
+    $match;
+    $oldMatch = null;
+    PathContext.set($pathContext);
+  });
+
+  if ($match && $oldMatch !== $match) {
+    const FoundComponent = $match.$component;
+    <FoundComponent $params={$match.$params} />
+  } else if ($match) {
+    const FoundComponent = $match.$component;
+    <FoundComponent $params={$match.$params} />
+  } else {
+    <props.$404 $route={$pathContext[0]} />
+  }
+}

@@ -1,0 +1,12 @@
+import { getPath, Link } from '@kgroat/ripple-router';
+
+export component Foo (props: { $params: { $foo: string, $rest: string } }) {
+	const $path = getPath();
+	<h1>{'Foo route'}</h1>
+	<p>{'$foo is '}{props.$params.$foo}</p>
+	<p>{'The rest of path is '}{props.$params.$rest ?? '/'}</p>
+	<p>{'The whole path is '}{$path}</p>
+	<p><Link class='link' href={`./deep/`}>{'Go deeper'}</Link></p>
+	<p><Link class='link' href='/'>{'Go home'}</Link></p>
+	<p><Link class='link' href='/inline'>{'Go to Inline'}</Link></p>
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@kgroat/ripple-router",
+  "version": "0.0.1",
+  "description": "A small, typesafe router for ripple-based apps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "pnpm build:vite && pnpm build:tsc",
+    "build:vite": "vite build",
+    "build:tsc": "tsc",
+    "prepack": "pnpm build"
+  },
+  "keywords": [
+    "ripple",
+    "router"
+  ],
+  "author": "kgroat",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0",
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-ripple": "^0.2.29",
+    "ripple": "^0.2.44",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "vite-plugin-ripple": "^0.2.29"
+  },
+  "peerDependencies": {
+    "ripple": "^0.2.44"
+  }
+}
