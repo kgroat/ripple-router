@@ -1,6 +1,6 @@
 {
   "name": "@kgroat/ripple-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A small, typesafe router for ripple-based apps",
   "type": "module",
   "main": "./dist/index.js",
@@ -23,6 +23,7 @@
   "author": "kgroat",
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
+  "homepage": "https://github.com/kgroat/ripple-router",
   "devDependencies": {
     "prettier": "^3.6.2",
     "prettier-plugin-ripple": "0.2.36",
