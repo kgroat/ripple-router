@@ -20,7 +20,7 @@ import { MyOtherComponent } from './MyOtherComponent.ripple';
 component NotFound (props: { $route: string }) {
   <h1>{'Not Found'}</h1>
   <p>{'The route '}<code>{props.$route}</code>{' does not exist'}</p>
-	<p><Link class='link' href='/'>{'Go Home'}</Link></p>
+  <p><Link class='link' href='/'>{'Go Home'}</Link></p>
   <style>
   code {
     background-color: rgba(0, 0, 0, 0.1);
@@ -41,7 +41,7 @@ component MySubComponent (props: { $params: { myParam: string, mySubParam: strin
   <h1>{'My Sub Component'}</h1>
   <p>{'The myParam param is "'}{$params.myParam}{'"'}</p>
   <p>{'The mySubParam param is "'}{$params.mySubParam}{'"'}</p>
-	<p><Link class='link' href='/my-route/foo/bar/'>{'Go to My Route'}</Link></p>
+  <p><Link class='link' href='/my-route/foo/bar/'>{'Go to My Route'}</Link></p>
 }
 
 component MyInvalidComponent (props: { $params: { nonExistantParam: string } }) {
