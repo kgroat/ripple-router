@@ -23,7 +23,8 @@
   "author": "kgroat",
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
-  "homepage": "https://github.com/kgroat/ripple-router",
+  "repository": "https://github.com/kgroat/ripple-router",
+  "homepage": "https://github.com/kgroat/ripple-router#readme",
   "devDependencies": {
     "prettier": "^3.6.2",
     "prettier-plugin-ripple": "0.2.36",
