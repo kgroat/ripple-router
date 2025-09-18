@@ -49,18 +49,18 @@ export component Router (props: RouterProps) {
     const FoundComponent = $match.$component;
     <FoundComponent $params={$match.$params}>
       if (Object.keys($match.$subRoutes).length) {
-        <Router $routes={$match.$subRoutes} $404={$match.$notFound} $basePath={$match.$path} />
+        <Router $routes={$match.$subRoutes} $notFound={$match.$notFound} $basePath={$match.$path} />
       }
     </FoundComponent>
   } else if ($match) {
     const FoundComponent = $match.$component;
     <FoundComponent $params={$match.$params}>
       if (Object.keys($match.$subRoutes).length) {
-        <Router $routes={$match.$subRoutes} $404={$match.$notFound} $basePath={$match.$path} />
+        <Router $routes={$match.$subRoutes} $notFound={$match.$notFound} $basePath={$match.$path} />
       }
     </FoundComponent>
   } else {
-    const NotFoundComponent = props.$404;
+    const NotFoundComponent = props.$notFound;
     <NotFoundComponent $route={$routeDetails.$path} />
   }
 }

@@ -81,7 +81,7 @@ export interface RouterProps<
 	TPrefix extends string = ''
 > {
 	$routes: Routes<TRoutes0, TRoutes1, TRoutes2, TRoutes3, TRoutes4, TPrefix>;
-  $404: Component;
+  $notFound: Component;
 	$basePath?: string;
 }
 
