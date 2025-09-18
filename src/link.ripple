@@ -7,9 +7,9 @@ export component Link (props: JSX.IntrinsicElements['a']) {
       return;
     }
   
-    event.preventDefault();
+    ev.preventDefault();
     $goTo(props.href);
-    props.onClick?.(event);
+    props.onClick?.(ev);
   }
 
   <a {...props} onClick={$handleClick}><props.$children /></a>

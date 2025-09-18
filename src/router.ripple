@@ -1,17 +1,9 @@
-import { type Component, effect, untrack } from 'ripple'
-import { RouterMap } from './routing'
+import { effect, untrack } from 'ripple'
+import { RouterMap, RouterProps } from './routing'
 import { RouteContext } from './context'
 
-export component Router (props: {
-  $routes: {
-    [routeStr: `/${string}`]: {
-      component: Component;
-      exact?: boolean;
-    }
-  }
-  $404: Component;
-}) {
-  const $compiledRoutes = RouterMap.from(props.$routes);
+export component Router (props: RouterProps) {
+  const $compiledRoutes = RouterMap.from(props.$routes, props.$basePath);
   let $match = untrack(() => $compiledRoutes).getMatch(window.location.pathname);
 
   const $setPath = (path: string) => {
@@ -26,21 +18,49 @@ export component Router (props: {
 
   let $renderHack = false;
 
-  const $routeDetails = {
+  let contextValue: RouteContextType | null;
+  try {
+    contextValue = RouteContext.get();
+  } catch {
+    contextValue = null;
+  }
+
+  if (contextValue) {
+    effect(() => {
+      const currentMatch = $match;
+      $match = $compiledRoutes.getMatch($routeDetails.$path);
+      if ($match?.$component !== currentMatch?.$component) {
+        $renderHack = !$renderHack;
+      }
+    })
+  }
+
+  const $routeDetails = contextValue ?? {
     $path: window.location.pathname,
     $params: $match?.$params ?? {},
     $goTo: $setPath,
   };
 
-  RouteContext.set($routeDetails);
+  if (!RouteContext.get()) {
+    RouteContext.set($routeDetails);
+  }
 
   if ($match && $renderHack) {
     const FoundComponent = $match.$component;
-    <FoundComponent $params={$match.$params} />
+    <FoundComponent $params={$match.$params}>
+      if (Object.keys($match.$subRoutes).length) {
+        <Router $routes={$match.$subRoutes} $404={$match.$notFound} $basePath={$match.$path} />
+      }
+    </FoundComponent>
   } else if ($match) {
     const FoundComponent = $match.$component;
-    <FoundComponent $params={$match.$params} />
+    <FoundComponent $params={$match.$params}>
+      if (Object.keys($match.$subRoutes).length) {
+        <Router $routes={$match.$subRoutes} $404={$match.$notFound} $basePath={$match.$path} />
+      }
+    </FoundComponent>
   } else {
-    <props.$404 $route={$routeDetails.$path} />
+    const NotFoundComponent = props.$404;
+    <NotFoundComponent $route={$routeDetails.$path} />
   }
 }

@@ -1,8 +1,10 @@
 import { Link, Router } from '@kgroat/ripple-router';
 import { Home } from './Home.ripple';
 import { Foo } from './Foo.ripple';
-component Inline () {
+component Inline (props: { $params: { inline: string } }) {
+  const { $params } = props;
   <h1>{'Inline'}</h1>
+  <p>{$params.inline}</p>
 	<p><Link class='link' href='/'>{'Go Home'}</Link></p>
 	<p><Link class='link' href='/foo/bar/'>{'Go to Foo'}</Link></p>
 }
@@ -15,20 +17,40 @@ component NotFound (props: { $route: string }) {
 	<p><Link class='link' href='/inline'>{'Go to Inline'}</Link></p>
 }
 
+component Meep () {
+  <h1>{'Meep!'}</h1>
+}
+
+component Deep (props: { $params: { foo: string, next, deep?: string } }) {
+  const { $params } = props;
+  <h1>{'Deep'}</h1>
+  <p>{'The foo param is "'}{$params.foo}{'"'}</p>
+  <p>{'The next param is "'}{$params.next}{'"'}</p>
+  <p>{'The deep param is "'}{$params.deep}{'"'}</p>
+}
+
 export component App() {
   <Router
     $routes={{
       '/': {
         component: Home,
       },
-      '/foo/:$foo/*$rest': {
+      '/foo/:foo': {
         component: Foo,
-        allowExtra: true,
+        subRoutes: {
+          '/meep': {
+            component: Meep,
+          },
+          '/:next/*deep': {
+            component: Deep,
+          },
+        },
       },
-      '/inline': {
+      '/inline/:inline': {
         component: Inline,
       }
     }}
     $404={NotFound}
   />
 }
+

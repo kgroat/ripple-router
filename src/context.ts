@@ -1,9 +1,11 @@
 import { createContext } from "ripple";
 
-export const RouteContext = createContext({
-  $path: window.location.pathname,
+export type RouteContextType = {
+  $path: string,
   $goTo: (_: string) => {},
-});
+};
+
+export const RouteContext = createContext<RouteContextType | null>(null);
 
 export function getRoute () {
   return RouteContext.get();

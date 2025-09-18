@@ -5,8 +5,8 @@ export default defineConfig(({ mode }) => ({
 	plugins: [ripple() as any],
 	build: {
 		target: 'esnext',
-		minify: mode === 'production',
-
+		minify: false, //mode === 'production',
+		sourcemap: mode !== 'production',
 		lib: {
 			entry: 'src/index.ts',
 			formats: ['es' as const],

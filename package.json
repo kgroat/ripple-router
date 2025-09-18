@@ -25,13 +25,13 @@
   "packageManager": "pnpm@10.14.0",
   "devDependencies": {
     "prettier": "^3.6.2",
-    "prettier-plugin-ripple": "^0.2.29",
-    "ripple": "^0.2.44",
+    "prettier-plugin-ripple": "0.2.36",
+    "ripple": "0.2.36",
     "typescript": "^5.9.2",
-    "vite": "^7.1.4",
-    "vite-plugin-ripple": "^0.2.29"
+    "vite": "^7.1.5",
+    "vite-plugin-ripple": "0.2.36"
   },
   "peerDependencies": {
-    "ripple": "^0.2.44"
+    "ripple": "^0.2.36"
   }
 }

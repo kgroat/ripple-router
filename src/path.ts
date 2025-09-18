@@ -1,10 +1,12 @@
+const NeverSymbol = Symbol('never');
+
 type ParseParam<TSegment extends string> = TSegment extends `:${infer TParam}`
 	? { [param in TParam]: string }
 	: unknown;
 
 type ParsePathInner<
 	TPath extends string, // The path remaining to parse
-	TParams = unknown, // The collected path parameters
+	TParams = { [NeverSymbol]: never }, // The collected path parameters
 > = TPath extends ''
 	? TParams // Base case: there is no more path to parse (it is an empty string)
 	: TPath extends `/*${infer TParam}` // Splat operator stops all other operations
@@ -19,8 +21,11 @@ type ParsePathInner<
 					? TParams & ParseParam<TSegment> // Base case: this is the last segment
 					: TParams; // Base case: there are no more segments to parse
 
-export type ParsePath<TPath extends string> =
-	ParsePathInner<TPath> extends object ? Readonly<ParsePathInner<TPath>> : undefined;
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
+export type ParsePath<TPath extends string> = Prettify<ParsePathInner<TPath>>;
 
 function nextSegmentIndex(path: string) {
 	if (!path.includes('(')) {
@@ -121,7 +126,7 @@ export class Path<TPath extends string> {
 
 		// Matched and there were not capture groups
 		if (!result.groups) {
-			return {} as ParsePath<TPath>;
+			return { [NeverSymbol]: 'never'} as ParsePath<TPath>;
 		}
 
 		// Mapped and there were capture groups
