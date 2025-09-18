@@ -46,7 +46,7 @@ component MySubComponent (props: { $params: { myParam: string, mySubParam: strin
 
 component MyInvalidComponent (props: { $params: { nonExistantParam: string } }) {
   const { $params } = props;
-  <h1>{'My Sub Component'}</h1>
+  <h1>{'My Invalid Component'}</h1>
   <p>{'The nonExistantParam param is "'}{$params.nonExistantParam}{'"'}</p>
 }
 
